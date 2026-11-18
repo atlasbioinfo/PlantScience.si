@@ -1,0 +1,865 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PlantScience.si — Towards Plant Science Superintelligence</title>
+<meta name="description" content="PlantScience.si is the vision for plant science superintelligence: one open intelligence resource that draws on the literature, its images and plant databases, and answers with the evidence behind each claim.">
+<link rel="canonical" href="https://plantscience.si/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="PlantScience.si — Towards Plant Science Superintelligence">
+<meta property="og:description" content="One open intelligence resource for all of plant science, with the evidence behind every claim.">
+<meta property="og:url" content="https://plantscience.si/">
+<meta name="theme-color" content="#07160f">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2307160f'/%3E%3Cpath d='M32 52V30' stroke='%2364d99a' stroke-width='4' stroke-linecap='round'/%3E%3Cpath d='M32 34C22 34 14 27 13 15c12 0 19 7 19 19z' fill='%2364d99a'/%3E%3Cpath d='M32 28c0-9 6-15 17-16 0 10-6 16-17 16z' fill='%23b9ec6f'/%3E%3C/svg%3E">
+<style>
+:root{
+  --ink:#07160f; --ink2:#0c2118; --ink3:#12301f;
+  --paper:#f6f8f4; --card:#ffffff; --line:#dfe6dc;
+  --text:#14231b; --muted:#56655c;
+  --leaf:#2f9e6b; --mint:#64d99a; --lime:#b9ec6f;
+  --vis:#e58a3c; --db:#3d8fd9; --edu:#d9a514; --evo:#8f74e0;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--sans);color:var(--text);background:var(--paper);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+img{max-width:100%;display:block}
+.wrap{max-width:1140px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:var(--serif);font-weight:600;letter-spacing:-.01em;line-height:1.12;margin:0}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--leaf);margin:0 0 14px}
+.lede{font-size:19px;color:var(--muted);max-width:720px;margin:18px 0 0}
+
+/* nav */
+.nav{position:fixed;inset:0 0 auto 0;z-index:20;transition:background .3s,box-shadow .3s}
+.nav.solid{background:rgba(7,22,15,.88);backdrop-filter:blur(10px);box-shadow:0 1px 0 rgba(255,255,255,.06)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
+.brand{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-family:var(--serif);font-size:19px;font-weight:600}
+.brand b{color:var(--mint);font-weight:600}
+.nav ul{display:flex;gap:26px;list-style:none;margin:0;padding:0}
+.nav ul a{color:rgba(255,255,255,.72);text-decoration:none;font-size:14px}
+.nav ul a:hover{color:#fff}
+.menu{all:unset;display:none;cursor:pointer;width:44px;height:44px;align-items:center;justify-content:center;color:#fff;border-radius:10px}
+.menu:focus-visible{outline:2px solid var(--lime)}
+@media(max-width:760px){
+  .menu{display:flex}
+  .nav.open{background:#07160f}
+  .nav ul{display:none;position:absolute;top:62px;left:0;right:0;flex-direction:column;gap:0;background:#07160f;padding:6px 24px 16px;border-bottom:1px solid rgba(255,255,255,.08)}
+  .nav.open ul{display:flex}
+  .nav ul a{display:block;padding:13px 0;font-size:16px;border-top:1px solid rgba(255,255,255,.07)}
+}
+
+/* hero */
+.hero{position:relative;background:radial-gradient(1200px 700px at 78% 30%,#14402a 0%,var(--ink2) 45%,var(--ink) 100%);color:#fff;overflow:hidden}
+#net{position:absolute;inset:0;width:100%;height:100%;opacity:.55}
+.hero .wrap{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:20px;align-items:center;min-height:100vh;padding-top:90px;padding-bottom:50px}
+.hero .eyebrow{color:var(--mint)}
+.hero h1{font-size:clamp(40px,5.6vw,72px)}
+.hero h1 em{font-style:italic;color:var(--lime)}
+.hero p.sub{font-size:19px;color:rgba(255,255,255,.76);max-width:540px;margin:24px 0 0}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:999px;text-decoration:none;font-weight:600;font-size:15px;transition:transform .15s,background .2s}
+.btn:hover{transform:translateY(-1px)}
+.btn.pri{background:var(--mint);color:#06281a}
+.btn.sec{border:1px solid rgba(255,255,255,.28);color:#fff}
+.btn.sec:hover{background:rgba(255,255,255,.08)}
+.plant{width:100%;max-width:590px;margin:0 auto;display:block}
+.plant text{font-family:var(--sans)}
+@media(max-width:900px){.hero .wrap{grid-template-columns:1fr;padding-top:110px;gap:36px;min-height:0;padding-bottom:40px}.plant{max-width:520px}.hero p.sub{max-width:640px}}
+@media(max-width:600px){.hero .wrap{padding-top:96px}.hero p.sub{font-size:17px}.cta{margin-top:26px}.btn{padding:12px 18px}
+  .plant .lab{font-size:17px}.plant .cap-t{font-size:16px}.plant .cap-s{font-size:15px}}
+
+/* plant animation */
+.stem{stroke-dasharray:340;stroke-dashoffset:340;animation:draw 2.2s .3s ease-out forwards}
+.leaf{transform-origin:0 0;transform:scale(0);animation:unfurl .9s cubic-bezier(.2,.9,.3,1.2) forwards}
+.leaf.l1{animation-delay:.9s}.leaf.l2{animation-delay:1.3s}.leaf.l3{animation-delay:1.7s}.leaf.l4{animation-delay:2.1s}
+.lab{opacity:0;animation:fade .7s forwards}
+.lab.l1{animation-delay:1.3s}.lab.l2{animation-delay:1.7s}.lab.l3{animation-delay:2.1s}.lab.l4{animation-delay:2.5s}
+.bloom{opacity:0;animation:fade 1s 2.7s forwards}
+.bloom .halo{transform-origin:280px 86px;animation:breathe 3.4s ease-in-out infinite}
+.root-e{stroke-dasharray:6 7;animation:flow 2.6s linear infinite}
+.root-n{animation:tw 3s ease-in-out infinite}
+.root-n:nth-child(3n){animation-delay:.8s}.root-n:nth-child(3n+1){animation-delay:1.7s}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes unfurl{to{transform:scale(1)}}
+@keyframes fade{to{opacity:1}}
+@keyframes breathe{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.25);opacity:.9}}
+@keyframes flow{to{stroke-dashoffset:-26}}
+@keyframes tw{0%,100%{opacity:.55}50%{opacity:1}}
+
+/* stats */
+.stats{background:var(--ink);color:#fff;border-top:1px solid rgba(255,255,255,.07)}
+.stats .wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+.stat{padding:34px 20px 34px 0}
+.stat+.stat{padding-left:26px;border-left:1px solid rgba(255,255,255,.09)}
+.stat .n{font-family:var(--serif);font-size:clamp(30px,3.6vw,46px);color:var(--lime);line-height:1}
+.stat .l{font-size:14px;color:rgba(255,255,255,.66);margin-top:10px}
+.stats .head{grid-column:1/-1;margin:0;padding:30px 0 0;font-family:var(--mono);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mint)}
+.stats .head a{color:var(--lime);text-decoration:none;border-bottom:1px solid rgba(185,236,111,.4)}
+.stats .head span{color:rgba(255,255,255,.5)}
+.stats .stat{padding-top:24px}
+.stats .note{grid-column:1/-1;font-size:12.5px;color:rgba(255,255,255,.45);padding:0 0 26px;font-family:var(--mono)}
+@media(max-width:760px){.stats .wrap{grid-template-columns:1fr;padding-bottom:10px}.stats .stat{display:flex;align-items:baseline;gap:16px;padding:18px 0;border-left:0}.stats .stat+.stat{padding-left:0;border-top:1px solid rgba(255,255,255,.09)}.stat .n{flex:none;width:118px;font-size:30px}.stat .l{margin-top:0}}
+
+/* sections */
+section{padding:96px 0}
+section h2{font-size:clamp(30px,3.6vw,44px);max-width:800px}
+.fig{margin:44px 0 0;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px 18px 10px;box-shadow:0 20px 50px -34px rgba(12,40,25,.35);overflow-x:auto}
+.fig svg{display:block;width:100%;height:auto}
+.fig .tall{display:none;max-width:470px;margin:0 auto}
+@media(max-width:900px){.fig .wide{display:none}.fig .tall{display:block}}
+@media(max-width:760px){section{padding:64px 0}.lede{font-size:17px}.fig{margin-top:30px;padding:14px 10px 6px;border-radius:16px}.wrap{padding:0 20px}}
+.fig text{font-family:var(--sans)}
+figcaption{font-size:13.5px;color:var(--muted);padding:12px 6px 10px;border-top:1px dashed var(--line);margin-top:10px}
+figcaption b{color:var(--text)}
+
+.flowp{fill:none;stroke-width:2;stroke-dasharray:5 8;animation:flow2 1.6s linear infinite}
+@keyframes flow2{to{stroke-dashoffset:-26}}
+.kgn{animation:tw 2.8s ease-in-out infinite}
+.kgn:nth-child(2n){animation-delay:.9s}.kgn:nth-child(3n){animation-delay:1.6s}
+.orbit{transform-origin:480px 260px;animation:spin 40s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.pulse{transform-box:fill-box;transform-origin:center;animation:pulse 2.4s ease-out infinite}
+@keyframes pulse{0%{transform:scale(.7);opacity:.7}100%{transform:scale(1.9);opacity:0}}
+
+/* capabilities */
+.caps{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:46px}
+.cap{background:var(--card);border:1px solid var(--line);border-radius:20px;overflow:hidden;display:flex;flex-direction:column}
+.cap .art{background:linear-gradient(180deg,#fbfcfa,#f1f5ee);border-bottom:1px solid var(--line);padding:10px}
+.cap .art svg{width:100%;height:auto;display:block}
+.cap .art text{font-family:var(--sans)}
+.cap .body{padding:22px 24px 26px}
+.cap .tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--c)}
+.cap .tag i{width:9px;height:9px;border-radius:50%;background:var(--c);display:inline-block}
+.cap h3{font-size:24px;margin:10px 0 8px}
+.cap p{margin:0;color:var(--muted);font-size:15.5px}
+@media(max-width:900px){.caps{gap:16px}.cap .body{padding:18px 18px 22px}.cap h3{font-size:21px}.cap p{font-size:15px}}
+@media(max-width:640px){.caps{grid-template-columns:1fr;margin-top:32px}.cap h3{font-size:22px}}
+
+.scan{animation:scan 3.2s ease-in-out infinite}
+@keyframes scan{0%,100%{transform:translateY(0)}50%{transform:translateY(112px)}}
+.link{stroke-dasharray:4 5;animation:flow2 1.4s linear infinite}
+.seq{opacity:.25;animation:seq 6s infinite}
+.seq.e2{animation-delay:2s}.seq.e3{animation-delay:4s}
+.seq.s2{animation-delay:1.5s}.seq.s3{animation-delay:3s}.seq.s4{animation-delay:4.5s}
+@keyframes seq{0%{opacity:.25}4%,22%{opacity:1}30%,100%{opacity:.25}}
+.pop{opacity:0;animation:pop 6s infinite}
+.pop.p2{animation-delay:.5s}.pop.p3{animation-delay:1s}.pop.p4{animation-delay:1.5s}.pop.p5{animation-delay:2s}.pop.p6{animation-delay:2.5s}
+@keyframes pop{0%{opacity:0}8%,85%{opacity:1}100%{opacity:0}}
+
+/* demo */
+.dark{background:var(--ink);color:#fff}
+.dark .eyebrow{color:var(--mint)}
+.dark .lede{color:rgba(255,255,255,.7)}
+.demo{display:grid;grid-template-columns:300px 1fr;gap:24px;margin-top:46px}
+.who{display:flex;flex-direction:column;gap:10px}
+.who button{all:unset;cursor:pointer;display:flex;gap:14px;align-items:center;padding:14px 16px;border-radius:14px;border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.7);transition:.2s}
+.who button:hover{border-color:rgba(255,255,255,.3)}
+.who button[aria-selected=true]{background:rgba(100,217,154,.12);border-color:var(--mint);color:#fff}
+.who button:focus-visible{outline:2px solid var(--lime);outline-offset:2px}
+.who svg{flex:none}
+.who b{display:block;font-size:15.5px}.who span{font-size:13px;opacity:.75}
+.chat{background:#0d251a;border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:22px;min-height:400px;display:flex;flex-direction:column;gap:16px}
+.chat .bar{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:11.5px;color:rgba(255,255,255,.45);letter-spacing:.08em;text-transform:uppercase}
+.q{align-self:flex-end;background:#1b4631;border-radius:16px 16px 4px 16px;padding:11px 16px;max-width:85%;font-size:15.5px;min-height:46px}
+.a{background:rgba(255,255,255,.05);border-radius:16px 16px 16px 4px;padding:14px 18px;font-size:15.5px;color:rgba(255,255,255,.9);min-height:96px}
+.a sup{color:var(--lime);font-family:var(--mono);font-size:11px}
+.caret::after{content:"";display:inline-block;width:7px;height:1.05em;background:var(--mint);vertical-align:-2px;margin-left:2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.chips{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:auto}
+.chip{border:1px solid rgba(255,255,255,.12);border-left:3px solid var(--c);border-radius:10px;padding:10px 12px;opacity:0;transform:translateY(8px);transition:opacity .45s,transform .45s}
+.chip.on{opacity:1;transform:none}
+.chat.rev .a{order:1;min-height:0}.chat.rev .q{order:2;min-height:74px}.chat.rev .chips{order:3}
+.chips.c3{grid-template-columns:repeat(3,1fr)}
+.chip small{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--c)}
+.chip span{font-size:13.5px;color:rgba(255,255,255,.85)}
+@media(max-width:900px){.demo{grid-template-columns:1fr;gap:16px;margin-top:32px}
+  .who{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .who button{flex-direction:column;gap:8px;text-align:center;padding:14px 6px;min-width:0}
+  .who span{display:none}.who b{font-size:14.5px}
+  .chips{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.chips.c3{grid-template-columns:1fr}.chat{padding:16px;min-height:0;border-radius:16px}.q,.a{font-size:15px}.a{min-height:150px}.who b{font-size:13.5px}.who svg{width:28px;height:28px}}
+
+/* principles */
+.pr{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:42px}
+.pr div{border-top:2px solid var(--leaf);padding-top:16px}
+.pr b{font-family:var(--serif);font-size:19px;display:block;margin-bottom:6px}
+.pr p{margin:0;font-size:14.5px;color:var(--muted)}
+@media(max-width:820px){.pr{grid-template-columns:1fr 1fr;gap:22px 18px}}
+@media(max-width:480px){.pr{grid-template-columns:1fr}}
+
+/* initiative */
+.init{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
+.init ul{list-style:none;padding:0;margin:26px 0 0;display:grid;gap:14px}
+.init li{display:flex;gap:12px;font-size:16px;color:var(--muted)}
+.init li::before{content:"";flex:none;width:8px;height:8px;border-radius:50%;background:var(--leaf);margin-top:9px}
+.init li b{color:var(--text)}
+.cycle{width:100%;max-width:560px;margin:0 auto;display:block}
+.cycle text{font-family:var(--sans)}
+.runner{transform-origin:220px 220px;animation:spin 12s linear infinite}
+@media(max-width:860px){.init{grid-template-columns:1fr;gap:30px}.cycle{max-width:480px}}
+
+.support{padding:52px 0 0}
+.support h3{font-size:20px}
+.support .wrap{text-align:center}
+.support p{color:var(--muted);font-size:15px;margin:8px auto 0;max-width:720px}
+.marquee{overflow:hidden;margin-top:30px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+.track{display:flex;width:max-content;animation:marq 42s linear infinite}
+.marquee:hover .track,.marquee:focus-within .track{animation-play-state:paused}
+@keyframes marq{to{transform:translateX(-50%)}}
+.logos{display:flex;gap:16px;padding:6px 16px 8px 0}
+.logos a{flex:none;width:214px}
+.logos a{background:#fff;border:1px solid var(--line);border-radius:14px;height:112px;display:flex;align-items:center;justify-content:center;padding:18px 20px;transition:transform .2s,box-shadow .2s}
+.logos a:hover{transform:translateY(-3px);box-shadow:0 14px 30px -18px rgba(12,40,25,.4)}
+.logos img{max-height:68px;max-width:100%;width:auto;object-fit:contain}
+.logos a.tall img{max-height:84px}
+.logos a.photo{padding:0;overflow:hidden;background:#000}
+.logos a.lockup{flex-direction:column;gap:9px;text-decoration:none;padding:14px 16px}
+.logos a.lockup img{max-height:34px}
+.logos a.lockup span{font-family:var(--serif);font-size:15.5px;line-height:1.1;color:#14231b;white-space:nowrap;border-top:1px solid #d5dbd2;padding-top:8px}
+.logos a.photo.white{background:#fff}
+.logos a.photo img{max-height:none;width:100%;height:100%;object-fit:cover}
+@media(max-width:760px){.support{padding:38px 0 0}.marquee{margin-top:22px}.track{animation-duration:34s}.logos{gap:12px;padding-right:12px}.logos a{width:168px;height:92px;padding:14px}.logos img{max-height:56px}.logos a.tall img{max-height:70px}.logos a.lockup img{max-height:28px}.logos a.lockup span{font-size:13px}}
+
+/* team */
+.team{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:44px;max-width:900px}
+.person{display:flex;gap:22px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px}
+.person .ph{position:relative;flex:none;width:124px;height:124px}
+.person img{width:124px;height:124px;border-radius:50%;object-fit:cover}
+.person .ph::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:1.5px dashed var(--leaf);opacity:.55;animation:spin2 30s linear infinite}
+@keyframes spin2{to{transform:rotate(360deg)}}
+.person .role{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--leaf)}
+.person h3{font-size:24px;margin:6px 0 6px}
+.person p{margin:0;font-size:14.5px;color:var(--muted)}
+.person a{color:var(--leaf);font-size:14px;font-weight:600;text-decoration:none;display:inline-block;margin-top:8px}
+@media(max-width:900px){.team{gap:16px;margin-top:32px}.person{gap:16px;padding:18px}.person .ph,.person img{width:96px;height:96px}.person h3{font-size:22px}}
+@media(max-width:680px){.team{grid-template-columns:1fr}}
+@media(max-width:380px){.person{flex-direction:column;align-items:flex-start}}
+@media(max-width:760px){footer .wrap{flex-direction:column;align-items:flex-start;gap:10px}}
+
+footer{background:var(--ink);color:rgba(255,255,255,.6);padding:44px 0;font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:16px 40px;justify-content:space-between;align-items:center}
+footer a{color:var(--mint);text-decoration:none}
+
+/* reveal */
+.js .rv{opacity:0;transform:translateY(22px);transition:opacity .8s,transform .8s}
+.js .rv.in{opacity:1;transform:none}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;animation-delay:0s!important;transition-duration:.01ms!important}
+  .seq,.pop{opacity:1!important}
+  .marquee{-webkit-mask-image:none;mask-image:none}.track{width:auto;animation:none;display:block}.track .logos{flex-wrap:wrap;justify-content:center;padding:6px 20px 0}.track .logos[aria-hidden]{display:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="PlantScience.si home">
+      <svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true"><path d="M32 56V30" stroke="#64d99a" stroke-width="4" stroke-linecap="round"/><path d="M32 36C21 36 12 28 11 14c13 0 21 8 21 22z" fill="#64d99a"/><path d="M32 29c0-10 7-17 19-18 0 11-7 18-19 18z" fill="#b9ec6f"/></svg>
+      <span>PlantScience<b>.si</b></span>
+    </a>
+    <button class="menu" id="menu" aria-label="Menu" aria-expanded="false" aria-controls="navlinks"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <ul id="navlinks">
+      <li><a href="#vision">Vision</a></li>
+      <li><a href="#capabilities">Capabilities</a></li>
+      <li><a href="#in-use">In use</a></li>
+      <li><a href="#initiative">Initiative</a></li>
+      <li><a href="#team">Team</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <canvas id="net" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">PlantScience.si · the vision</p>
+      <h1>Towards plant science <em>superintelligence</em></h1>
+      <p class="sub">An intelligence system that draws on all of plant science at once, from the literature and its images to plant databases, and answers with the evidence behind each claim.</p>
+      <div class="cta">
+        <a class="btn pri" href="#vision">Explore the vision <span aria-hidden="true">↓</span></a>
+        <a class="btn sec" href="https://plantscience.ai" rel="noopener">Try PlantScience.ai today <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+
+    <svg class="plant" viewBox="-40 0 640 610" role="img" aria-labelledby="plantT plantD">
+      <title id="plantT">Concept: a plant growing from a knowledge graph</title>
+      <desc id="plantD">Roots drawn as a knowledge graph feed a stem with four leaves, labelled visual evidence, database integration, education and evolutionary insight, rising to a glowing node labelled plant science superintelligence.</desc>
+      <defs>
+        <radialGradient id="glow"><stop offset="0" stop-color="#e9ffb0" stop-opacity=".95"/><stop offset=".45" stop-color="#b9ec6f" stop-opacity=".35"/><stop offset="1" stop-color="#b9ec6f" stop-opacity="0"/></radialGradient>
+        <linearGradient id="soil" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".28"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+        <path id="stemP" d="M280,420 C274,350 290,285 279,215 C274,175 283,140 280,104"/>
+      </defs>
+
+      <!-- roots = knowledge graph -->
+      <g stroke="#64d99a" stroke-width="1.4" opacity=".75" fill="none">
+        <path class="root-e" d="M280,420 L222,468"/><path class="root-e" d="M280,420 L338,464"/><path class="root-e" d="M280,420 L280,476"/>
+        <path class="root-e" d="M222,468 L166,508"/><path class="root-e" d="M222,468 L250,524"/><path class="root-e" d="M280,476 L250,524"/>
+        <path class="root-e" d="M280,476 L318,526"/><path class="root-e" d="M338,464 L318,526"/><path class="root-e" d="M338,464 L396,500"/>
+        <path class="root-e" d="M166,508 L122,552"/><path class="root-e" d="M166,508 L204,562"/><path class="root-e" d="M250,524 L204,562"/>
+        <path class="root-e" d="M250,524 L286,568"/><path class="root-e" d="M318,526 L286,568"/><path class="root-e" d="M318,526 L364,566"/>
+        <path class="root-e" d="M396,500 L364,566"/><path class="root-e" d="M396,500 L442,546"/>
+      </g>
+      <g>
+        <circle class="root-n" cx="222" cy="468" r="6" fill="#64d99a"/><circle class="root-n" cx="338" cy="464" r="6" fill="#3d8fd9"/><circle class="root-n" cx="280" cy="476" r="5" fill="#b9ec6f"/>
+        <circle class="root-n" cx="166" cy="508" r="5" fill="#e58a3c"/><circle class="root-n" cx="250" cy="524" r="7" fill="#64d99a"/><circle class="root-n" cx="318" cy="526" r="6" fill="#8f74e0"/>
+        <circle class="root-n" cx="396" cy="500" r="5" fill="#64d99a"/><circle class="root-n" cx="122" cy="552" r="4" fill="#b9ec6f"/><circle class="root-n" cx="204" cy="562" r="5" fill="#3d8fd9"/>
+        <circle class="root-n" cx="286" cy="568" r="5" fill="#d9a514"/><circle class="root-n" cx="364" cy="566" r="5" fill="#64d99a"/><circle class="root-n" cx="442" cy="546" r="4" fill="#e58a3c"/>
+      </g>
+      <rect x="60" y="419" width="440" height="1.5" fill="url(#soil)"/>
+      <text class="cap-s" x="280" y="600" text-anchor="middle" font-size="12.5" fill="#fff" opacity=".7" letter-spacing="1.5">KNOWLEDGE GRAPH</text>
+
+      <!-- stem -->
+      <use href="#stemP" class="stem" fill="none" stroke="#64d99a" stroke-width="5" stroke-linecap="round"/>
+      <circle r="4" fill="#e9ffb0"><animateMotion dur="3.2s" begin="2.8s" repeatCount="indefinite"><mpath href="#stemP"/></animateMotion></circle>
+      <circle r="3" fill="#e9ffb0" opacity=".7"><animateMotion dur="3.2s" begin="4.4s" repeatCount="indefinite"><mpath href="#stemP"/></animateMotion></circle>
+
+      <!-- leaves -->
+      <g transform="translate(279,352)"><g class="leaf l1"><path d="M0,0 C-25,-38 -85,-48 -125,-22 C-95,8 -35,14 0,0Z" fill="#e58a3c"/><path d="M0,0 Q-60,-22 -125,-22" stroke="#07160f" stroke-opacity=".35" fill="none"/></g></g>
+      <g transform="translate(284,292)"><g class="leaf l2"><path d="M0,0 C25,-38 85,-48 125,-22 C95,8 35,14 0,0Z" fill="#3d8fd9"/><path d="M0,0 Q60,-22 125,-22" stroke="#07160f" stroke-opacity=".35" fill="none"/></g></g>
+      <g transform="translate(279,232)"><g class="leaf l3"><path d="M0,0 C-25,-38 -85,-48 -125,-22 C-95,8 -35,14 0,0Z" fill="#d9a514"/><path d="M0,0 Q-60,-22 -125,-22" stroke="#07160f" stroke-opacity=".35" fill="none"/></g></g>
+      <g transform="translate(278,172)"><g class="leaf l4"><path d="M0,0 C25,-38 85,-48 125,-22 C95,8 35,14 0,0Z" fill="#8f74e0"/><path d="M0,0 Q60,-22 125,-22" stroke="#07160f" stroke-opacity=".35" fill="none"/></g></g>
+      <g font-size="14.5" font-weight="600" fill="#fff">
+        <text class="lab l1" x="146" y="334" text-anchor="end">Visual evidence</text>
+        <text class="lab l2" x="416" y="274">Database integration</text>
+        <text class="lab l3" x="146" y="214" text-anchor="end">Education</text>
+        <text class="lab l4" x="410" y="154">Evolutionary insight</text>
+      </g>
+
+      <!-- bloom -->
+      <g class="bloom">
+        <circle class="halo" cx="280" cy="86" r="62" fill="url(#glow)"/>
+        <g stroke="#e9ffb0" stroke-width="1.2" opacity=".85" fill="none">
+          <path d="M280,86 L248,62"/><path d="M280,86 L312,60"/><path d="M280,86 L322,96"/><path d="M280,86 L240,100"/><path d="M280,86 L280,50"/>
+          <path d="M248,62 L280,50 L312,60 L322,96"/><path d="M248,62 L240,100"/>
+        </g>
+        <circle cx="280" cy="86" r="11" fill="#e9ffb0"/>
+        <circle cx="248" cy="62" r="4.5" fill="#b9ec6f"/><circle cx="312" cy="60" r="4.5" fill="#b9ec6f"/><circle cx="322" cy="96" r="4" fill="#b9ec6f"/><circle cx="240" cy="100" r="4" fill="#b9ec6f"/><circle cx="280" cy="50" r="4" fill="#b9ec6f"/>
+        <text class="cap-t" x="280" y="22" text-anchor="middle" font-size="13" fill="#e9ffb0" letter-spacing="1.6">PLANT SCIENCE SUPERINTELLIGENCE</text>
+      </g>
+      <text class="cap-s" x="300" y="398" font-size="12.5" fill="#fff" opacity=".7" letter-spacing="1">PlantScience.ai today</text>
+    </svg>
+  </div>
+</header>
+
+<!-- ============ STATS ============ -->
+<div class="stats">
+  <div class="wrap">
+    <p class="head"><a href="https://plantscience.ai" rel="noopener">PlantScience.ai</a> today <span>· the foundation PlantScience.si builds on</span></p>
+    <div class="stat"><div class="n" data-n="480253">480,253</div><div class="l">open-access articles read into the PlantScience.ai knowledge graph</div></div>
+    <div class="stat"><div class="n" data-n="9.66" data-d="2" data-s="M">9.66M</div><div class="l">entities, each linked to its source publication</div></div>
+    <div class="stat"><div class="n" data-n="47.2" data-d="1" data-s="M">47.2M</div><div class="l">relationships between genes, traits, species and more</div></div>
+  </div>
+</div>
+
+<!-- ============ SUPPORTERS ============ -->
+<section id="supporters" class="support">
+  <div class="wrap">
+    <h3 class="rv">With support from colleagues at</h3>
+    <p class="rv">Scientists, educators and resource leaders across UK plant science are helping to shape PlantScience.si.</p>
+  </div>
+  <div class="marquee rv">
+    <div class="track">
+      <div class="logos">
+          <a href="https://www.jic.ac.uk/" rel="noopener" title="John Innes Centre"><img src="assets/logos/jic.svg" alt="John Innes Centre" loading="lazy"></a>
+          <a href="https://www.tsl.ac.uk/" rel="noopener" title="The Sainsbury Laboratory"><img src="assets/logos/tsl.svg" alt="The Sainsbury Laboratory" loading="lazy"></a>
+          <a class="photo white" href="https://www.slcu.cam.ac.uk/" rel="noopener" title="Sainsbury Laboratory Cambridge University"><img src="assets/logos/slcu.png" alt="Sainsbury Laboratory Cambridge University" loading="lazy"></a>
+          <a href="https://www.cropsciencecentre.org/" rel="noopener" title="Crop Science Centre"><img src="assets/logos/csc.svg" alt="Crop Science Centre" loading="lazy"></a>
+          <a href="https://www.botanic.cam.ac.uk/" rel="noopener" title="Cambridge University Botanic Garden"><img src="assets/logos/cubg.svg" alt="Cambridge University Botanic Garden" loading="lazy"></a>
+          <a href="https://www.plantsci.cam.ac.uk/" rel="noopener" title="Department of Plant Sciences, University of Cambridge"><img src="assets/logos/plantsci.png" alt="Department of Plant Sciences, University of Cambridge" loading="lazy"></a>
+          <a class="photo" href="https://www.slcu.cam.ac.uk/gatsby-plant-science-education-programme" rel="noopener" title="Gatsby Plant Science Education Programme"><img src="assets/logos/gpsep.png" alt="Gatsby Plant Science Education Programme" loading="lazy"></a>
+          <a href="https://www.ebi.ac.uk/" rel="noopener" title="EMBL-EBI"><img src="assets/logos/embl-ebi.svg" alt="EMBL-EBI" loading="lazy"></a>
+          <a href="https://www.hutton.ac.uk/" rel="noopener" title="The James Hutton Institute"><img src="assets/logos/hutton.png" alt="The James Hutton Institute" loading="lazy"></a>
+          <a class="tall" href="https://www.biology.ox.ac.uk/" rel="noopener" title="Department of Biology, University of Oxford"><img src="assets/logos/oxford-biology.svg" alt="Department of Biology, University of Oxford" loading="lazy"></a>
+          <a href="https://www.cam.ac.uk/" rel="noopener" title="University of Cambridge"><img src="assets/logos/cambridge.svg" alt="University of Cambridge" loading="lazy"></a>
+      </div>
+      <div class="logos" aria-hidden="true">
+          <a tabindex="-1" href="https://www.jic.ac.uk/" rel="noopener" title="John Innes Centre"><img src="assets/logos/jic.svg" alt="" loading="lazy"></a>
+          <a tabindex="-1" href="https://www.tsl.ac.uk/" rel="noopener" title="The Sainsbury Laboratory"><img src="assets/logos/tsl.svg" alt="" loading="lazy"></a>
+          <a tabindex="-1" class="photo white" href="https://www.slcu.cam.ac.uk/" rel="noopener" title="Sainsbury Laboratory Cambridge University"><img src="assets/logos/slcu.png" alt="" loading="lazy"></a>
+          <a tabindex="-1" href="https://www.cropsciencecentre.org/" rel="noopener" title="Crop Science Centre"><img src="assets/logos/csc.svg" alt="" loading="lazy"></a>
+          <a tabindex="-1" href="https://www.botanic.cam.ac.uk/" rel="noopener" title="Cambridge University Botanic Garden"><img src="assets/logos/cubg.svg" alt="" loading="lazy"></a>
+          <a tabindex="-1" href="https://www.plantsci.cam.ac.uk/" rel="noopener" title="Department of Plant Sciences, University of Cambridge"><img src="assets/logos/plantsci.png" alt="" loading="lazy"></a>
+          <a tabindex="-1" class="photo" href="https://www.slcu.cam.ac.uk/gatsby-plant-science-education-programme" rel="noopener" title="Gatsby Plant Science Education Programme"><img src="assets/logos/gpsep.png" alt="" loading="lazy"></a>
+          <a tabindex="-1" href="https://www.ebi.ac.uk/" rel="noopener" title="EMBL-EBI"><img src="assets/logos/embl-ebi.svg" alt="" loading="lazy"></a>
+          <a tabindex="-1" href="https://www.hutton.ac.uk/" rel="noopener" title="The James Hutton Institute"><img src="assets/logos/hutton.png" alt="" loading="lazy"></a>
+          <a tabindex="-1" class="tall" href="https://www.biology.ox.ac.uk/" rel="noopener" title="Department of Biology, University of Oxford"><img src="assets/logos/oxford-biology.svg" alt="" loading="lazy"></a>
+          <a tabindex="-1" href="https://www.cam.ac.uk/" rel="noopener" title="University of Cambridge"><img src="assets/logos/cambridge.svg" alt="" loading="lazy"></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VISION / OVERVIEW FIGURE ============ -->
+<section id="vision" style="padding-top:72px">
+  <div class="wrap">
+    <p class="eyebrow rv">The vision</p>
+    <h2 class="rv">Plant science knows more than any one of us can read.</h2>
+    <p class="lede rv">Its knowledge is scattered across millions of papers, images and specialised databases, and it grows every year. A researcher asking what is known about a gene, a breeder narrowing a trait interval and a student learning to weigh evidence still assemble that picture by hand. PlantScience.si brings it together in one place.</p>
+
+    <figure class="fig rv">
+      <svg class="wide" viewBox="0 0 1100 520" role="img" aria-labelledby="f1t f1d">
+        <title id="f1t">PlantScience.si overview</title>
+        <desc id="f1d">Open-access papers with figures, plant databases and a gene orthology network flow into the plant science knowledge graph. An AI agent reasons over the graph and answers plant scientists, breeders, educators and students.</desc>
+        <defs>
+          <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10z" fill="#2f9e6b"/></marker>
+          <path id="pA" d="M236,110 C320,110 330,215 372,235"/>
+          <path id="pB" d="M236,260 L358,260"/>
+          <path id="pC" d="M236,410 C320,410 330,305 372,285"/>
+          <path id="pD" d="M602,260 L690,260"/>
+          <path id="pE" d="M790,245 C840,235 850,125 892,112"/>
+          <path id="pF" d="M794,260 L892,260"/>
+          <path id="pG" d="M790,275 C840,285 850,395 892,408"/>
+        </defs>
+
+        <g font-size="11" fill="#56655c" letter-spacing="1.6">
+          <text x="138" y="34" text-anchor="middle">SOURCES</text>
+          <text x="480" y="34" text-anchor="middle">KNOWLEDGE</text>
+          <text x="742" y="34" text-anchor="middle">REASONING</text>
+          <text x="978" y="34" text-anchor="middle">PEOPLE</text>
+        </g>
+
+        <!-- sources -->
+        <g>
+          <rect x="40" y="66" width="196" height="88" rx="14" fill="#fff7ef" stroke="#e58a3c"/>
+          <g transform="translate(58,84)"><rect x="6" y="0" width="34" height="44" rx="4" fill="#fff" stroke="#e58a3c"/><rect x="0" y="8" width="34" height="44" rx="4" fill="#fff" stroke="#e58a3c"/><rect x="5" y="15" width="24" height="14" rx="2" fill="#e58a3c" opacity=".55"/><path d="M5,36h24M5,42h16" stroke="#e58a3c" stroke-width="2" stroke-linecap="round"/></g>
+          <text x="112" y="104" font-size="15" font-weight="600" fill="#14231b">Papers</text>
+          <text x="112" y="124" font-size="12.5" fill="#56655c">text, figures and</text><text x="112" y="140" font-size="12.5" fill="#56655c">legends</text>
+
+          <rect x="40" y="216" width="196" height="88" rx="14" fill="#eff6fd" stroke="#3d8fd9"/>
+          <g transform="translate(60,232)" fill="#fff" stroke="#3d8fd9" stroke-width="1.5"><path d="M0,8v38c0,5 34,5 34,0V8"/><ellipse cx="17" cy="8" rx="17" ry="7"/><path d="M0,21c0,5 34,5 34,0M0,34c0,5 34,5 34,0" fill="none"/></g>
+          <text x="112" y="254" font-size="15" font-weight="600" fill="#14231b">Plant databases</text>
+          <text x="112" y="274" font-size="12.5" fill="#56655c">genomes, proteins,</text><text x="112" y="290" font-size="12.5" fill="#56655c">expression, RNA</text>
+
+          <rect x="40" y="366" width="196" height="88" rx="14" fill="#f4f1fd" stroke="#8f74e0"/>
+          <g transform="translate(58,384)" fill="none" stroke="#8f74e0" stroke-width="2" stroke-linecap="round"><path d="M0,26h10M10,10v32M10,10h14M10,42h8M18,32v20M18,32h18M18,52h18M24,10h12"/><circle cx="40" cy="10" r="3.5" fill="#8f74e0"/><circle cx="40" cy="32" r="3.5" fill="#8f74e0"/><circle cx="40" cy="52" r="3.5" fill="#8f74e0"/></g>
+          <text x="112" y="404" font-size="15" font-weight="600" fill="#14231b">Gene orthology</text>
+          <text x="112" y="424" font-size="12.5" fill="#56655c">shared ancestry</text><text x="112" y="440" font-size="12.5" fill="#56655c">across genomes</text>
+        </g>
+
+        <!-- flows in -->
+        <use href="#pA" class="flowp" stroke="#e58a3c"/><use href="#pB" class="flowp" stroke="#3d8fd9"/><use href="#pC" class="flowp" stroke="#8f74e0"/>
+        <circle r="4.5" fill="#e58a3c"><animateMotion dur="2.6s" repeatCount="indefinite"><mpath href="#pA"/></animateMotion></circle>
+        <circle r="4.5" fill="#3d8fd9"><animateMotion dur="2.2s" begin=".6s" repeatCount="indefinite"><mpath href="#pB"/></animateMotion></circle>
+        <circle r="4.5" fill="#8f74e0"><animateMotion dur="2.6s" begin="1.1s" repeatCount="indefinite"><mpath href="#pC"/></animateMotion></circle>
+
+        <!-- knowledge graph -->
+        <circle cx="480" cy="260" r="122" fill="#f1f8f3" stroke="#2f9e6b" stroke-opacity=".35"/>
+        <g class="orbit"><circle cx="480" cy="260" r="142" fill="none" stroke="#2f9e6b" stroke-opacity=".3" stroke-dasharray="2 9"/><circle cx="480" cy="118" r="5" fill="#e58a3c"/><circle cx="622" cy="260" r="5" fill="#3d8fd9"/><circle cx="480" cy="402" r="5" fill="#d9a514"/><circle cx="338" cy="260" r="5" fill="#8f74e0"/></g>
+        <g stroke="#2f9e6b" stroke-opacity=".5" stroke-width="1.3">
+          <path d="M480,260L430,215M480,260L535,222M480,260L525,305M480,260L428,300M480,260L480,188M430,215L480,188M480,188L535,222M535,222L570,268M570,268L525,305M525,305L482,338M482,338L428,300M428,300L392,255M392,255L430,215M430,215L410,172M535,222L548,176M482,338L520,352M428,300L405,338"/>
+        </g>
+        <g>
+          <circle class="kgn" cx="480" cy="260" r="12" fill="#2f9e6b"/><circle class="kgn" cx="430" cy="215" r="8" fill="#64d99a"/><circle class="kgn" cx="535" cy="222" r="8" fill="#3d8fd9"/>
+          <circle class="kgn" cx="525" cy="305" r="8" fill="#8f74e0"/><circle class="kgn" cx="428" cy="300" r="8" fill="#e58a3c"/><circle class="kgn" cx="480" cy="188" r="7" fill="#64d99a"/>
+          <circle class="kgn" cx="570" cy="268" r="6" fill="#64d99a"/><circle class="kgn" cx="482" cy="338" r="7" fill="#d9a514"/><circle class="kgn" cx="392" cy="255" r="6" fill="#3d8fd9"/>
+          <circle class="kgn" cx="410" cy="172" r="5" fill="#8f74e0"/><circle class="kgn" cx="548" cy="176" r="5" fill="#e58a3c"/><circle class="kgn" cx="520" cy="352" r="5" fill="#64d99a"/><circle class="kgn" cx="405" cy="338" r="5" fill="#64d99a"/>
+        </g>
+        <text x="480" y="432" text-anchor="middle" font-size="15" font-weight="600" fill="#14231b">Plant Science Knowledge Graph</text>
+        <text x="480" y="452" text-anchor="middle" font-size="12.5" fill="#56655c">every edge traceable to its source</text>
+
+        <!-- agent -->
+        <use href="#pD" class="flowp" stroke="#2f9e6b" marker-end="url(#ah)"/>
+        <circle class="pulse" cx="742" cy="260" r="40" fill="#2f9e6b" opacity=".3"/>
+        <path d="M742,208 L787,234 L787,286 L742,312 L697,286 L697,234Z" fill="#0c2118" stroke="#64d99a" stroke-width="2"/>
+        <path d="M742,236 l6,16 16,6 -16,6 -6,16 -6,-16 -16,-6 16,-6z" fill="#b9ec6f"/>
+        <text x="742" y="344" text-anchor="middle" font-size="15" font-weight="600" fill="#14231b">AI agent</text>
+        <text x="742" y="364" text-anchor="middle" font-size="12.5" fill="#56655c">plans, retrieves, cites</text>
+
+        <!-- to users -->
+        <use href="#pE" class="flowp" stroke="#2f9e6b" marker-end="url(#ah)"/><use href="#pF" class="flowp" stroke="#2f9e6b" marker-end="url(#ah)"/><use href="#pG" class="flowp" stroke="#2f9e6b" marker-end="url(#ah)"/>
+        <g>
+          <rect x="898" y="72" width="170" height="76" rx="14" fill="#fff" stroke="#dfe6dc"/>
+          <g transform="translate(916,90)" fill="none" stroke="#2f9e6b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12,2h14M15,2v13L4,36a3,3 0 0 0 3,4h24a3,3 0 0 0 3-4L23,15V2"/><path d="M9,28h20" /></g>
+          <text x="966" y="106" font-size="15" font-weight="600" fill="#14231b">Scientists</text><text x="966" y="126" font-size="12.5" fill="#56655c">weigh evidence</text>
+
+          <rect x="898" y="222" width="170" height="76" rx="14" fill="#fff" stroke="#dfe6dc"/>
+          <g transform="translate(918,238)" fill="none" stroke="#2f9e6b" stroke-width="2" stroke-linecap="round"><path d="M18,44V10"/><path d="M18,14c-8,0-10-6-10-10 8,0 10,6 10,10zM18,14c8,0 10-6 10-10-8,0-10,6-10,10zM18,26c-8,0-10-6-10-10 8,0 10,6 10,10zM18,26c8,0 10-6 10-10-8,0-10,6-10,10zM18,38c-8,0-10-6-10-10 8,0 10,6 10,10zM18,38c8,0 10-6 10-10-8,0-10,6-10,10z"/></g>
+          <text x="966" y="256" font-size="15" font-weight="600" fill="#14231b">Breeders</text><text x="966" y="276" font-size="12.5" fill="#56655c">trait to gene</text>
+
+          <rect x="898" y="372" width="170" height="76" rx="14" fill="#fff" stroke="#dfe6dc"/>
+          <g transform="translate(914,392)" fill="none" stroke="#2f9e6b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2,12L22,3 42,12 22,21z"/><path d="M10,17v10c6,6 18,6 24,0V17M42,12v14"/></g>
+          <text x="966" y="406" font-size="15" font-weight="600" fill="#14231b">Educators</text><text x="966" y="426" font-size="12.5" fill="#56655c">and students</text>
+        </g>
+      </svg>
+      <svg class="tall" viewBox="0 0 360 780" role="img" aria-label="Papers, plant databases and gene orthology flow into the plant science knowledge graph. An AI agent reasons over it and answers scientists, breeders, educators and students.">
+        <defs>
+          <marker id="ahv" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10z" fill="#2f9e6b"/></marker>
+          <path id="vA" d="M60,134 C60,172 112,168 130,200"/>
+          <path id="vB" d="M180,134 L180,186"/>
+          <path id="vC" d="M300,134 C300,172 248,168 230,200"/>
+          <path id="vD" d="M180,458 L180,480"/>
+          <path id="vE" d="M168,618 C150,640 60,632 60,662"/>
+          <path id="vF" d="M180,620 L180,662"/>
+          <path id="vG" d="M192,618 C210,640 300,632 300,662"/>
+        </defs>
+        <text x="180" y="18" text-anchor="middle" font-size="10.5" fill="#56655c" letter-spacing="1.6">SOURCES</text>
+        <g>
+          <rect x="6" y="30" width="108" height="104" rx="12" fill="#fff7ef" stroke="#e58a3c"/>
+          <g transform="translate(40,40)"><rect x="6" y="0" width="34" height="44" rx="4" fill="#fff" stroke="#e58a3c"/><rect x="0" y="8" width="34" height="44" rx="4" fill="#fff" stroke="#e58a3c"/><rect x="5" y="15" width="24" height="14" rx="2" fill="#e58a3c" opacity=".55"/><path d="M5,36h24M5,42h16" stroke="#e58a3c" stroke-width="2" stroke-linecap="round"/></g>
+          <text x="60" y="111" text-anchor="middle" font-size="13.5" font-weight="600" fill="#14231b">Papers</text><text x="60" y="126" text-anchor="middle" font-size="10.5" fill="#56655c">text and figures</text>
+          <rect x="126" y="30" width="108" height="104" rx="12" fill="#eff6fd" stroke="#3d8fd9"/>
+          <g transform="translate(163,41)" fill="#fff" stroke="#3d8fd9" stroke-width="1.5"><path d="M0,8v38c0,5 34,5 34,0V8"/><ellipse cx="17" cy="8" rx="17" ry="7"/><path d="M0,21c0,5 34,5 34,0M0,34c0,5 34,5 34,0" fill="none"/></g>
+          <text x="180" y="111" text-anchor="middle" font-size="13.5" font-weight="600" fill="#14231b">Databases</text><text x="180" y="126" text-anchor="middle" font-size="10.5" fill="#56655c">live records</text>
+          <rect x="246" y="30" width="108" height="104" rx="12" fill="#f4f1fd" stroke="#8f74e0"/>
+          <g transform="translate(278,40)" fill="none" stroke="#8f74e0" stroke-width="2" stroke-linecap="round"><path d="M0,26h10M10,10v32M10,10h14M10,42h8M18,32v20M18,32h18M18,52h18M24,10h12"/><circle cx="40" cy="10" r="3.5" fill="#8f74e0"/><circle cx="40" cy="32" r="3.5" fill="#8f74e0"/><circle cx="40" cy="52" r="3.5" fill="#8f74e0"/></g>
+          <text x="300" y="111" text-anchor="middle" font-size="13.5" font-weight="600" fill="#14231b">Orthology</text><text x="300" y="126" text-anchor="middle" font-size="10.5" fill="#56655c">shared ancestry</text>
+        </g>
+        <use href="#vA" class="flowp" stroke="#e58a3c"/><use href="#vB" class="flowp" stroke="#3d8fd9"/><use href="#vC" class="flowp" stroke="#8f74e0"/>
+        <circle r="4.5" fill="#e58a3c"><animateMotion dur="2.2s" repeatCount="indefinite"><mpath href="#vA"/></animateMotion></circle>
+        <circle r="4.5" fill="#3d8fd9"><animateMotion dur="1.8s" begin=".6s" repeatCount="indefinite"><mpath href="#vB"/></animateMotion></circle>
+        <circle r="4.5" fill="#8f74e0"><animateMotion dur="2.2s" begin="1.1s" repeatCount="indefinite"><mpath href="#vC"/></animateMotion></circle>
+        <g transform="translate(180,296) scale(.8) translate(-480,-260)"><circle cx="480" cy="260" r="122" fill="#f1f8f3" stroke="#2f9e6b" stroke-opacity=".35"/>
+        <g class="orbit"><circle cx="480" cy="260" r="142" fill="none" stroke="#2f9e6b" stroke-opacity=".3" stroke-dasharray="2 9"/><circle cx="480" cy="118" r="5" fill="#e58a3c"/><circle cx="622" cy="260" r="5" fill="#3d8fd9"/><circle cx="480" cy="402" r="5" fill="#d9a514"/><circle cx="338" cy="260" r="5" fill="#8f74e0"/></g>
+        <g stroke="#2f9e6b" stroke-opacity=".5" stroke-width="1.3">
+          <path d="M480,260L430,215M480,260L535,222M480,260L525,305M480,260L428,300M480,260L480,188M430,215L480,188M480,188L535,222M535,222L570,268M570,268L525,305M525,305L482,338M482,338L428,300M428,300L392,255M392,255L430,215M430,215L410,172M535,222L548,176M482,338L520,352M428,300L405,338"/>
+        </g>
+        <g>
+          <circle class="kgn" cx="480" cy="260" r="12" fill="#2f9e6b"/><circle class="kgn" cx="430" cy="215" r="8" fill="#64d99a"/><circle class="kgn" cx="535" cy="222" r="8" fill="#3d8fd9"/>
+          <circle class="kgn" cx="525" cy="305" r="8" fill="#8f74e0"/><circle class="kgn" cx="428" cy="300" r="8" fill="#e58a3c"/><circle class="kgn" cx="480" cy="188" r="7" fill="#64d99a"/>
+          <circle class="kgn" cx="570" cy="268" r="6" fill="#64d99a"/><circle class="kgn" cx="482" cy="338" r="7" fill="#d9a514"/><circle class="kgn" cx="392" cy="255" r="6" fill="#3d8fd9"/>
+          <circle class="kgn" cx="410" cy="172" r="5" fill="#8f74e0"/><circle class="kgn" cx="548" cy="176" r="5" fill="#e58a3c"/><circle class="kgn" cx="520" cy="352" r="5" fill="#64d99a"/><circle class="kgn" cx="405" cy="338" r="5" fill="#64d99a"/>
+        </g></g>
+        <text x="180" y="430" text-anchor="middle" font-size="14" font-weight="600" fill="#14231b">Plant Science Knowledge Graph</text>
+        <text x="180" y="447" text-anchor="middle" font-size="11.5" fill="#56655c">every edge traceable to its source</text>
+        <use href="#vD" class="flowp" stroke="#2f9e6b" marker-end="url(#ahv)"/>
+        <g transform="translate(180,530) scale(.78) translate(-742,-260)"><circle class="pulse" cx="742" cy="260" r="40" fill="#2f9e6b" opacity=".3"/>
+        <path d="M742,208 L787,234 L787,286 L742,312 L697,286 L697,234Z" fill="#0c2118" stroke="#64d99a" stroke-width="2"/>
+        <path d="M742,236 l6,16 16,6 -16,6 -6,16 -6,-16 -16,-6 16,-6z" fill="#b9ec6f"/></g>
+        <text x="180" y="592" text-anchor="middle" font-size="14" font-weight="600" fill="#14231b">AI agent</text>
+        <text x="180" y="609" text-anchor="middle" font-size="11.5" fill="#56655c">plans, retrieves, cites</text>
+        <use href="#vE" class="flowp" stroke="#2f9e6b" marker-end="url(#ahv)"/><use href="#vF" class="flowp" stroke="#2f9e6b" marker-end="url(#ahv)"/><use href="#vG" class="flowp" stroke="#2f9e6b" marker-end="url(#ahv)"/>
+        <g>
+          <rect x="6" y="668" width="108" height="100" rx="12" fill="#fff" stroke="#dfe6dc"/>
+          <g transform="translate(41,678)" fill="none" stroke="#2f9e6b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12,2h14M15,2v13L4,36a3,3 0 0 0 3,4h24a3,3 0 0 0 3-4L23,15V2"/><path d="M9,28h20"/></g>
+          <text x="60" y="743" text-anchor="middle" font-size="13.5" font-weight="600" fill="#14231b">Scientists</text><text x="60" y="758" text-anchor="middle" font-size="10.5" fill="#56655c">weigh evidence</text>
+          <rect x="126" y="668" width="108" height="100" rx="12" fill="#fff" stroke="#dfe6dc"/>
+          <g transform="translate(162,676)" fill="none" stroke="#2f9e6b" stroke-width="2" stroke-linecap="round"><path d="M18,44V10"/><path d="M18,14c-8,0-10-6-10-10 8,0 10,6 10,10zM18,14c8,0 10-6 10-10-8,0-10,6-10,10zM18,26c-8,0-10-6-10-10 8,0 10,6 10,10zM18,26c8,0 10-6 10-10-8,0-10,6-10,10zM18,38c-8,0-10-6-10-10 8,0 10,6 10,10zM18,38c8,0 10-6 10-10-8,0-10,6-10,10z"/></g>
+          <text x="180" y="743" text-anchor="middle" font-size="13.5" font-weight="600" fill="#14231b">Breeders</text><text x="180" y="758" text-anchor="middle" font-size="10.5" fill="#56655c">trait to gene</text>
+          <rect x="246" y="668" width="108" height="100" rx="12" fill="#fff" stroke="#dfe6dc"/>
+          <g transform="translate(278,686)" fill="none" stroke="#2f9e6b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2,12L22,3 42,12 22,21z"/><path d="M10,17v10c6,6 18,6 24,0V17M42,12v14"/></g>
+          <text x="300" y="743" text-anchor="middle" font-size="13.5" font-weight="600" fill="#14231b">Educators</text><text x="300" y="758" text-anchor="middle" font-size="10.5" fill="#56655c">and students</text>
+        </g>
+      </svg>
+      <figcaption><b>Concept 1 · One intelligence, all of plant science.</b> Papers with their figures, plant databases and a gene orthology network build one knowledge graph. An AI agent reasons across it and answers each person with the evidence behind every claim.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ CAPABILITIES ============ -->
+<section id="capabilities" style="padding-top:0">
+  <div class="wrap">
+    <p class="eyebrow rv">Four new capabilities</p>
+    <h2 class="rv">From answers in text to evidence you can see, query, teach with and trace through evolution.</h2>
+
+    <div class="caps">
+      <!-- visual evidence -->
+      <article class="cap rv" style="--c:var(--vis)">
+        <div class="art">
+          <svg viewBox="0 0 360 190" role="img" aria-label="A published figure is scanned panel by panel and each panel is linked to the gene, tissue and finding it shows.">
+            <rect x="24" y="22" width="150" height="146" rx="8" fill="#fff" stroke="#d8dfd4"/>
+            <rect x="34" y="32" width="62" height="58" rx="4" fill="#e9f5ec"/>
+            <path d="M65,84 C48,70 48,50 65,38 C82,50 82,70 65,84Z" fill="#2f9e6b"/><path d="M65,84V44" stroke="#fff" stroke-width="1.5"/>
+            <rect x="102" y="32" width="62" height="58" rx="4" fill="#fdf3e8"/>
+            <g fill="#e58a3c"><rect x="110" y="62" width="9" height="22"/><rect x="123" y="48" width="9" height="36"/><rect x="136" y="56" width="9" height="28"/><rect x="149" y="40" width="9" height="44"/></g>
+            <rect x="34" y="96" width="130" height="38" rx="4" fill="#0c2118"/>
+            <g fill="#64d99a"><circle cx="52" cy="115" r="7"/><circle cx="74" cy="112" r="5" opacity=".7"/><circle cx="94" cy="118" r="8" opacity=".85"/><circle cx="118" cy="113" r="6" opacity=".6"/><circle cx="142" cy="116" r="7"/></g>
+            <path d="M34,144h130M34,152h96M34,160h112" stroke="#cfd7ca" stroke-width="3" stroke-linecap="round"/>
+            <g class="scan"><rect x="24" y="30" width="150" height="20" fill="#e58a3c" opacity=".14"/><path d="M24,50h150" stroke="#e58a3c" stroke-width="2"/></g>
+            <g fill="none" stroke="#e58a3c" stroke-width="1.6">
+              <path class="link" d="M96,58 C150,20 230,30 268,46"/><path class="link" d="M164,115 C200,110 230,100 268,96"/><path class="link" d="M164,60 C210,90 230,140 268,146"/>
+            </g>
+            <g font-size="12" font-weight="600" fill="#14231b">
+              <g class="seq"><circle cx="280" cy="46" r="11" fill="#2f9e6b"/><text x="298" y="50">Gene</text></g>
+              <g class="seq s2"><circle cx="280" cy="96" r="11" fill="#3d8fd9"/><text x="298" y="100">Tissue</text></g>
+              <g class="seq s3"><circle cx="280" cy="146" r="11" fill="#e58a3c"/><text x="298" y="150">Finding</text></g>
+            </g>
+          </svg>
+        </div>
+        <div class="body">
+          <span class="tag"><i></i>Visual evidence</span>
+          <h3>See the image behind the finding</h3>
+          <p>Much of plant science's primary evidence is visual. Phenotype photographs, micrographs and plots from the open literature are linked to the genes, tissues and findings they show, so an answer can display its evidence, with author, journal and licence.</p>
+        </div>
+      </article>
+
+      <!-- database integration -->
+      <article class="cap rv" style="--c:var(--db)">
+        <div class="art">
+          <svg viewBox="0 0 360 190" role="img" aria-label="A gene name is resolved to an identifier, sent to several plant databases, and returned as records carrying identifier, release and link.">
+            <defs><path id="d1" d="M138,95 C170,95 180,44 214,44"/><path id="d2" d="M138,95 L214,95"/><path id="d3" d="M138,95 C170,95 180,146 214,146"/></defs>
+            <rect x="18" y="74" width="120" height="42" rx="21" fill="#fff" stroke="#3d8fd9" stroke-width="1.5"/>
+            <text x="78" y="92" text-anchor="middle" font-size="11" fill="#56655c">gene name</text>
+            <text x="78" y="107" text-anchor="middle" font-size="11.5" font-weight="600" fill="#14231b" font-family="ui-monospace,Menlo,monospace">→ identifier</text>
+            <g fill="none" stroke="#3d8fd9" stroke-width="1.6"><use href="#d1" class="link"/><use href="#d2" class="link"/><use href="#d3" class="link"/></g>
+            <circle r="4" fill="#3d8fd9"><animateMotion dur="1.8s" repeatCount="indefinite"><mpath href="#d1"/></animateMotion></circle>
+            <circle r="4" fill="#3d8fd9"><animateMotion dur="1.8s" begin=".5s" repeatCount="indefinite"><mpath href="#d2"/></animateMotion></circle>
+            <circle r="4" fill="#3d8fd9"><animateMotion dur="1.8s" begin="1s" repeatCount="indefinite"><mpath href="#d3"/></animateMotion></circle>
+            <g fill="#eff6fd" stroke="#3d8fd9" stroke-width="1.5">
+              <g transform="translate(218,28)"><path d="M0,6v20c0,5 30,5 30,0V6"/><ellipse cx="15" cy="6" rx="15" ry="6"/></g>
+              <g transform="translate(218,79)"><path d="M0,6v20c0,5 30,5 30,0V6"/><ellipse cx="15" cy="6" rx="15" ry="6"/></g>
+              <g transform="translate(218,130)"><path d="M0,6v20c0,5 30,5 30,0V6"/><ellipse cx="15" cy="6" rx="15" ry="6"/></g>
+            </g>
+            <g font-size="11.5" font-weight="600" fill="#14231b"><text x="258" y="42">Genomes</text><text x="258" y="93">Expression</text><text x="258" y="144">Proteins</text></g>
+            <g font-size="10" fill="#3d8fd9" font-family="ui-monospace,Menlo,monospace">
+              <text class="seq" x="258" y="56">ID · release · link</text><text class="seq s2" x="258" y="107">ID · release · link</text><text class="seq s3" x="258" y="158">ID · release · link</text>
+            </g>
+          </svg>
+        </div>
+        <div class="body">
+          <span class="tag"><i></i>Database integration</span>
+          <h3>Live records, never invented identifiers</h3>
+          <p>Language models invent identifiers and numbers. The agent instead calls skills that query established plant bioinformatics databases directly, and every statement is labelled as literature-supported or database-supported, with identifier, release and link.</p>
+        </div>
+      </article>
+
+      <!-- education -->
+      <article class="cap rv" style="--c:var(--edu)">
+        <div class="art">
+          <svg viewBox="0 0 360 190" role="img" aria-label="Education mode: the AI asks the student a question, the student finds the evidence, and the student reaches a conclusion.">
+            <circle cx="180" cy="98" r="62" fill="none" stroke="#d9a514" stroke-opacity=".35" stroke-width="1.5" stroke-dasharray="3 7"/>
+            <g transform="translate(180,98)" fill="none" stroke="#d9a514" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M-22,-6L0,-16 22,-6 0,4z"/><path d="M-12,-1v10c7,6 17,6 24,0V-1M22,-6v13"/></g>
+            <g font-size="12" font-weight="600" fill="#14231b">
+              <g class="seq e1"><circle cx="180" cy="36" r="13" fill="#d9a514"/><text x="180" y="40.5" text-anchor="middle" fill="#fff">1</text><text x="200" y="28">The AI asks a question</text></g>
+              <g class="seq e2"><circle cx="234" cy="129" r="13" fill="#d9a514"/><text x="234" y="133.5" text-anchor="middle" fill="#fff">2</text><text x="254" y="128">The student finds</text><text x="254" y="143">the evidence</text></g>
+              <g class="seq e3"><circle cx="126" cy="129" r="13" fill="#d9a514"/><text x="126" y="133.5" text-anchor="middle" fill="#fff">3</text><text x="106" y="128" text-anchor="end">The student</text><text x="106" y="143" text-anchor="end">concludes</text></g>
+            </g>
+          </svg>
+        </div>
+        <div class="body">
+          <span class="tag"><i></i>Education</span>
+          <h3>A teaching mode that asks, not answers for you</h3>
+          <p>Developed with educators and students. Instead of handing over an answer, the agent poses a question at the student’s level. The student searches the published findings, figures and data, then reaches their own conclusion, with safeguards against outsourcing assessed work.</p>
+        </div>
+      </article>
+
+      <!-- evolution -->
+      <article class="cap rv" style="--c:var(--evo)">
+        <div class="art">
+          <svg viewBox="0 0 360 190" role="img" aria-label="A gene family tree across Arabidopsis, rice, wheat and barley, with each orthologue marked as conserved, diverged or not yet studied.">
+            <g fill="none" stroke="#8f74e0" stroke-width="2" stroke-linecap="round">
+              <path d="M20,59h26M46,24v70M46,24h92M46,94h26M72,64v60M72,64h66M72,124h22M94,104v40M94,104h44M94,144h44"/>
+            </g>
+            <g font-size="12" fill="#14231b" font-style="italic"><text x="146" y="28">Arabidopsis</text><text x="146" y="68">Rice</text><text x="146" y="108">Wheat</text><text x="146" y="148">Barley</text></g>
+            <g>
+              <circle class="pop" cx="244" cy="24" r="7" fill="#2f9e6b"/><circle class="pop p2" cx="244" cy="64" r="7" fill="#2f9e6b"/><circle class="pop p3" cx="244" cy="104" r="7" fill="#2f9e6b"/><circle class="pop p4" cx="244" cy="144" r="7" fill="none" stroke="#9aa69e" stroke-width="1.6" stroke-dasharray="3 3"/>
+              <circle class="pop p2" cx="270" cy="24" r="7" fill="#2f9e6b"/><circle class="pop p3" cx="270" cy="64" r="7" fill="#e58a3c"/><circle class="pop p4" cx="270" cy="104" r="7" fill="none" stroke="#9aa69e" stroke-width="1.6" stroke-dasharray="3 3"/><circle class="pop p5" cx="270" cy="144" r="7" fill="none" stroke="#9aa69e" stroke-width="1.6" stroke-dasharray="3 3"/>
+              <circle class="pop p3" cx="296" cy="24" r="7" fill="#2f9e6b"/><circle class="pop p4" cx="296" cy="64" r="7" fill="#2f9e6b"/><circle class="pop p5" cx="296" cy="104" r="7" fill="#e58a3c"/><circle class="pop p6" cx="296" cy="144" r="7" fill="#2f9e6b"/>
+            </g>
+            <path d="M318,26 C344,48 344,82 320,102" fill="none" stroke="#8f74e0" stroke-width="1.6" class="link"/>
+            <path d="M329,100 l-9,2 1,-9" fill="none" stroke="#8f74e0" stroke-width="1.6"/>
+            <g font-size="10" fill="#56655c"><circle cx="100" cy="174" r="4" fill="#2f9e6b"/><text x="108" y="177.5">conserved</text><circle cx="172" cy="174" r="4" fill="#e58a3c"/><text x="180" y="177.5">diverged</text><circle cx="236" cy="174" r="4" fill="none" stroke="#9aa69e" stroke-dasharray="2 2"/><text x="244" y="177.5">not studied</text></g>
+          </svg>
+        </div>
+        <div class="body">
+          <span class="tag"><i></i>Evolutionary insight</span>
+          <h3>From Arabidopsis to crops, through shared ancestry</h3>
+          <p>Most functional evidence comes from model species, while decisions are made in crops. A gene orthology network links each gene family across plant genomes, showing which functions are conserved, which have diverged and where evidence is missing.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DEMO ============ -->
+<section class="dark" id="in-use">
+  <div class="wrap">
+    <p class="eyebrow rv">In use</p>
+    <h2 class="rv">One question. Four kinds of evidence.</h2>
+    <p class="lede rv">A plant scientist and a wheat breeder ask about the same gene, and each can follow every statement back to its source. In Education mode the AI asks the question, and the student finds the evidence.</p>
+
+    <div class="demo rv">
+      <div class="who" role="tablist" aria-label="Choose a user">
+        <button role="tab" aria-selected="true" data-i="0"><svg width="34" height="34" viewBox="0 0 38 42" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12,2h14M15,2v13L4,36a3,3 0 0 0 3,4h24a3,3 0 0 0 3-4L23,15V2M9,28h20"/></svg><div><b>Plant scientist</b><span>What is known about this gene?</span></div></button>
+        <button role="tab" aria-selected="false" data-i="1"><svg width="34" height="34" viewBox="0 0 36 46" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18,44V10M18,14c-8,0-10-6-10-10 8,0 10,6 10,10zM18,14c8,0 10-6 10-10-8,0-10,6-10,10zM18,26c-8,0-10-6-10-10 8,0 10,6 10,10zM18,26c8,0 10-6 10-10-8,0-10,6-10,10zM18,38c-8,0-10-6-10-10 8,0 10,6 10,10zM18,38c8,0 10-6 10-10-8,0-10,6-10,10z"/></svg><div><b>Wheat breeder</b><span>Which gene is in my interval?</span></div></button>
+        <button role="tab" aria-selected="false" data-i="2"><svg width="34" height="34" viewBox="0 0 44 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2,12L22,3 42,12 22,21zM10,17v10c6,6 18,6 24,0V17M42,12v14"/></svg><div><b>Student</b><span>Education mode</span></div></button>
+      </div>
+      <div class="chat" aria-live="polite">
+        <div class="bar"><span>PlantScience.si</span><span>Illustrative mock-up</span></div>
+        <div class="q" id="q"></div>
+        <div class="a" id="a"></div>
+        <div class="chips" id="chips"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRINCIPLES ============ -->
+<section>
+  <div class="wrap">
+    <p class="eyebrow rv">How it earns trust</p>
+    <h2 class="rv">It synthesises what is known. Scientists stay responsible for judgement.</h2>
+    <div class="pr rv">
+      <div><b>Traceable</b><p>Every statement links to the publication or database record it came from.</p></div>
+      <div><b>Labelled</b><p>Literature-supported and database-supported claims are marked as such.</p></div>
+      <div><b>Honest about gaps</b><p>Inferences across species are hypotheses with confidence levels. Missing evidence is shown as missing.</p></div>
+      <div><b>Open</b><p>Versioned, FAIR releases, an open benchmark, and an API any AI agent can use.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INITIATIVE ============ -->
+<section id="initiative" style="background:#eef3ea">
+  <div class="wrap">
+    <div class="init">
+      <div>
+        <p class="eyebrow rv">Plant Science AI Initiative</p>
+        <h2 class="rv">A resource built and steered by its community.</h2>
+        <p class="lede rv">Plant science researchers, breeders, educators and database providers unite around one open intelligence resource.</p>
+        <ul class="rv">
+          <li><span><b>Contribute skills.</b> Database providers add their resources through an open specification.</span></li>
+          <li><span><b>Set the standard.</b> Members submit and review benchmark questions, published every year.</span></li>
+          <li><span><b>Guide priorities.</b> A public roadmap, ranked by the people who use it.</span></li>
+          <li><span><b>Build on it.</b> Open API and Model Context Protocol endpoints, with versioned knowledge-graph releases.</span></li>
+        </ul>
+      </div>
+      <svg class="cycle rv" viewBox="-80 0 600 440" role="img" aria-label="The release cycle: literature update, benchmarks, release gate and versioned release, with the community at the centre.">
+        <circle cx="220" cy="220" r="150" fill="none" stroke="#2f9e6b" stroke-opacity=".3" stroke-width="2"/>
+        <g class="runner"><path d="M220,70 A150,150 0 0 1 370,220" fill="none" stroke="#2f9e6b" stroke-width="4" stroke-linecap="round"/><circle cx="370" cy="220" r="7" fill="#2f9e6b"/></g>
+        <circle cx="220" cy="220" r="74" fill="#fff" stroke="#dfe6dc"/>
+        <g fill="#2f9e6b"><circle cx="220" cy="196" r="9"/><circle cx="194" cy="204" r="7" opacity=".7"/><circle cx="246" cy="204" r="7" opacity=".7"/><path d="M202,232c0-12 36-12 36,0v6h-36z"/><path d="M180,234c0-9 16-10 20-6v10h-20zM260,234c0-9-16-10-20-6v10h20z" opacity=".7"/></g>
+        <text x="220" y="262" text-anchor="middle" font-size="13" font-weight="600" fill="#14231b">Community</text>
+        <g font-size="13" font-weight="600" fill="#14231b" text-anchor="middle">
+          <g><circle cx="220" cy="70" r="22" fill="#fff" stroke="#2f9e6b" stroke-width="2"/><path d="M212,62h16v16h-16zM215,67h10M215,72h7" fill="none" stroke="#2f9e6b" stroke-width="1.8"/><text x="220" y="34">Literature update</text></g>
+          <g><circle cx="370" cy="220" r="22" fill="#fff" stroke="#2f9e6b" stroke-width="2"/><path d="M361,228v-8M370,228v-16M379,228v-11" stroke="#2f9e6b" stroke-width="3" stroke-linecap="round"/><text x="402" y="225" text-anchor="start">Benchmarks</text></g>
+          <g><circle cx="220" cy="370" r="22" fill="#fff" stroke="#2f9e6b" stroke-width="2"/><path d="M210,370l7,7 13-14" fill="none" stroke="#2f9e6b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><text x="220" y="414">Release gate</text></g>
+          <g><circle cx="70" cy="220" r="22" fill="#fff" stroke="#2f9e6b" stroke-width="2"/><path d="M70,209v16M63,219l7,7 7-7M61,231h18" fill="none" stroke="#2f9e6b" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><text x="38" y="216" text-anchor="end">Versioned</text><text x="38" y="233" text-anchor="end">release</text></g>
+        </g>
+      </svg>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ TEAM ============ -->
+<section id="team">
+  <div class="wrap">
+    <p class="eyebrow rv">Team</p>
+    <h2 class="rv">Project leads</h2>
+    <div class="team">
+      <div class="person rv">
+        <div class="ph"><img src="assets/people/yiliang-ding.webp" alt="Portrait of Yiliang Ding" width="124" height="124"></div>
+        <div>
+          <span class="role">Project lead</span>
+          <h3>Yiliang Ding</h3>
+          <p>Professor and Group Leader<br>John Innes Centre</p>
+          <a href="https://www.jic.ac.uk/people/yilliang-ding/" rel="noopener">Profile ↗</a>
+        </div>
+      </div>
+      <div class="person rv">
+        <div class="ph"><img src="assets/people/haopeng-yu.webp" alt="Portrait of Haopeng Yu" width="124" height="124"></div>
+        <div>
+          <span class="role">Project co-lead</span>
+          <h3>Haopeng Yu</h3>
+          <p>Principal Investigator<br>Sainsbury Laboratory, University of Cambridge (SLCU)</p>
+          <a href="https://www.slcu.cam.ac.uk/people/haopeng-yu" rel="noopener">Profile ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<footer>
+  <div class="wrap">
+    <div>PlantScience<b style="color:var(--mint)">.si</b> builds on <a href="https://plantscience.ai" rel="noopener">PlantScience.ai</a>, an AI virtual scientist for plant science.</div>
+    <div>Yu H <i>et al.</i>, <i>Molecular Plant</i>, 2026 · <a href="https://doi.org/10.1016/j.molp.2026.03.010" rel="noopener">doi:10.1016/j.molp.2026.03.010</a></div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var d=document, reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  d.documentElement.classList.add('js');
+
+  /* nav */
+  var nav=d.getElementById('nav');
+  function onS(){nav.classList.toggle('solid',scrollY>40)} onS(); addEventListener('scroll',onS,{passive:true});
+  var menu=d.getElementById('menu');
+  function setM(o){nav.classList.toggle('open',o);menu.setAttribute('aria-expanded',o)}
+  menu.addEventListener('click',function(){setM(!nav.classList.contains('open'))});
+  [].forEach.call(d.querySelectorAll('#navlinks a'),function(a){a.addEventListener('click',function(){setM(false)})});
+
+  /* reveal */
+  var rv=[].slice.call(d.querySelectorAll('.rv'));
+  if('IntersectionObserver' in window && !reduce){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+    rv.forEach(function(el){io.observe(el)});
+  } else rv.forEach(function(el){el.classList.add('in')});
+
+  /* counters */
+  function fmt(v,dec,suf){return (dec?v.toFixed(dec):Math.round(v).toLocaleString('en-GB'))+(suf||'')}
+  var nums=[].slice.call(d.querySelectorAll('.stat .n'));
+  if('IntersectionObserver' in window && !reduce){
+    var co=new IntersectionObserver(function(es){es.forEach(function(e){
+      if(!e.isIntersecting) return; co.unobserve(e.target);
+      var el=e.target, to=+el.dataset.n, dec=+(el.dataset.d||0), suf=el.dataset.s||'', t0=null;
+      function step(t){ if(!t0)t0=t; var p=Math.min(1,(t-t0)/1500), k=1-Math.pow(1-p,3); el.textContent=fmt(to*k,dec,suf); if(p<1)requestAnimationFrame(step) }
+      requestAnimationFrame(step);
+    })},{threshold:.5});
+    nums.forEach(function(el){co.observe(el)});
+  }
+
+  /* hero network */
+  var cv=d.getElementById('net'), cx=cv.getContext('2d'), W,H,P=[], cols=['#64d99a','#b9ec6f','#3d8fd9','#e58a3c','#8f74e0'];
+  function size(){var r=cv.getBoundingClientRect(), dpr=Math.min(devicePixelRatio||1,2); W=r.width;H=r.height;cv.width=W*dpr;cv.height=H*dpr;cx.setTransform(dpr,0,0,dpr,0,0);
+    var n=Math.round(Math.min(70,W*H/22000)); P=[]; for(var i=0;i<n;i++)P.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,r:1+Math.random()*2.2,c:cols[i%cols.length]});}
+  function draw(){cx.clearRect(0,0,W,H);
+    for(var i=0;i<P.length;i++){var a=P[i]; a.x+=a.vx;a.y+=a.vy; if(a.x<0||a.x>W)a.vx*=-1; if(a.y<0||a.y>H)a.vy*=-1;
+      for(var j=i+1;j<P.length;j++){var b=P[j],dx=a.x-b.x,dy=a.y-b.y,q=dx*dx+dy*dy; if(q<17000){cx.globalAlpha=(1-q/17000)*.35;cx.strokeStyle='#64d99a';cx.lineWidth=.7;cx.beginPath();cx.moveTo(a.x,a.y);cx.lineTo(b.x,b.y);cx.stroke()}}
+      cx.globalAlpha=.8;cx.fillStyle=a.c;cx.beginPath();cx.arc(a.x,a.y,a.r,0,6.3);cx.fill()}
+    cx.globalAlpha=1;}
+  var vis=true, raf;
+  function loop(){draw(); if(vis&&!reduce) raf=requestAnimationFrame(loop)}
+  size(); loop();
+  addEventListener('resize',function(){size(); if(reduce)draw()});
+  if('IntersectionObserver' in window) new IntersectionObserver(function(es){var v=es[0].isIntersecting; if(v&&!vis){vis=true;loop()} else vis=v}).observe(cv);
+
+  /* demo */
+  var S=[
+   {q:'What does GW2 do in rice and wheat?',
+    a:'GW2 encodes a RING-type E3 ubiquitin ligase that limits grain width and weight in rice; loss of function gives wider, heavier grains<sup>[1]</sup>. In wheat, the TaGW2 homoeologues act in the same direction, with additive effects on grain size<sup>[2]</sup>.',
+    c:[['vis','Literature','2 cited findings','#64d99a'],['x','Visual evidence','Grain phenotype panels','#e58a3c'],['x','Database','Os02g0244100 · release pinned','#3d8fd9'],['x','Orthologues','Rice → wheat · conserved','#8f74e0']]},
+   {q:'Which grain-size genes lie in my 6A QTL interval?',
+    a:'Candidates in the interval are ranked by the evidence behind them. TaGW2-A1 leads: its rice orthologue GW2 is a known negative regulator of grain width<sup>[1]</sup>, and wheat mutants carry larger grains<sup>[2]</sup>. Genes with no published evidence are listed as gaps, not hidden.',
+    c:[['x','Literature','QTL and mutant studies','#64d99a'],['x','Visual evidence','Grain morphometric plots','#e58a3c'],['x','Database','Gene models in the interval','#3d8fd9'],['x','Orthologues','GW2 (rice) → TaGW2-A1','#8f74e0']]},
+   {rev:true,
+    a:'A question for you. Wheat breeders want bigger grains: which gene would you target, and why? Search the literature, the published images and the database records, then tell me what you conclude.',
+    q:'I found that GW2 limits grain width in rice, and that wheat TaGW2 mutants carry larger grains. My conclusion: TaGW2 is a strong target, because its function is conserved in both species.',
+    c:[['x','Step 1','The AI asks a question','#d9a514'],['x','Step 2','The student finds the evidence','#d9a514'],['x','Step 3','The student concludes','#d9a514']]}
+  ];
+  var qEl=d.getElementById('q'), aEl=d.getElementById('a'), chEl=d.getElementById('chips'), tabs=[].slice.call(d.querySelectorAll('.who button')), cur=0, timers=[], auto=true, started=false;
+  function clear(){timers.forEach(clearTimeout);timers=[]}
+  function later(f,ms){timers.push(setTimeout(f,ms))}
+  var chat=d.querySelector('.chat');
+  function show(i,instant){
+    clear(); cur=i; var s=S[i];
+    tabs.forEach(function(b,k){b.setAttribute('aria-selected',k===i)});
+    chat.classList.toggle('rev',!!s.rev);
+    chEl.className='chips'+(s.c.length===3?' c3':'');
+    chEl.innerHTML=s.c.map(function(c){return '<div class="chip" style="--c:'+c[3]+'"><small>'+c[1]+'</small><span>'+c[2]+'</span></div>'}).join('');
+    var chips=[].slice.call(chEl.children);
+    if(instant||reduce){qEl.textContent=s.q;qEl.className='q';aEl.innerHTML=s.a;aEl.className='a';chips.forEach(function(c){c.classList.add('on')});return}
+    qEl.textContent='';aEl.innerHTML='';qEl.className='q';aEl.className='a';
+    function typeQ(done){var n=0;qEl.className='q caret';(function t(){qEl.textContent=s.q.slice(0,++n); if(n<s.q.length)later(t,s.rev?18:26); else {qEl.className='q';later(done,350)}})()}
+    function typeA(done){var words=s.a.split(' '),k=0;aEl.className='a caret';(function w(){aEl.innerHTML=words.slice(0,++k).join(' '); if(k<words.length)later(w,42); else {aEl.className='a';later(done,350)}})()}
+    function fin(){chips.forEach(function(c,j){later(function(){c.classList.add('on')},200+j*260)}); if(auto)later(function(){show((cur+1)%S.length)},6500)}
+    if(s.rev) typeA(function(){later(function(){typeQ(fin)},700)}); else typeQ(function(){typeA(fin)});
+  }
+  tabs.forEach(function(b){b.addEventListener('click',function(){auto=false;show(+b.dataset.i)})});
+  show(0,true);
+  if('IntersectionObserver' in window && !reduce){
+    new IntersectionObserver(function(es,o){if(es[0].isIntersecting&&!started){started=true;o.disconnect();show(0)}},{threshold:.4}).observe(d.querySelector('.chat'));
+  }
+})();
+</script>
+</body>
+</html>
